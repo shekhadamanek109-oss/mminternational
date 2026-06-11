@@ -8,7 +8,15 @@ let productsList = [
     img: "https://images.unsplash.com/photo-1605100804763-247f67b3557e?auto=format&fit=crop&q=80&w=600",
     badge: "Exclusive",
     desc: "An iconic symbol of eternal devotion. This signature ring features a brilliant round-cut diamond cradled in an elevated platinum claw setting, designed to catch light from every angle.",
-    specs: { metal: "Platinum 950", gemstone: "Round Cut Diamond", carats: "1.80 ct", clarity: "VVS1" }
+    specs: { metal: "Platinum 950", gemstone: "Round Cut Diamond", carats: "1.80 ct", clarity: "VVS1" },
+    images: [
+      "https://images.unsplash.com/photo-1605100804763-247f67b3557e?auto=format&fit=crop&q=80&w=600",
+      "https://images.unsplash.com/photo-1603561591411-07134e71a2a9?auto=format&fit=crop&q=80&w=600",
+      "https://images.unsplash.com/photo-1515562141207-7a88fb7ce338?auto=format&fit=crop&q=80&w=600"
+    ],
+    videos: [
+      "https://www.w3schools.com/html/mov_bbb.mp4"
+    ]
   },
   {
     id: "necklace-aurora",
@@ -18,7 +26,11 @@ let productsList = [
     img: "https://images.unsplash.com/photo-1599643478518-a784e5dc4c8f?auto=format&fit=crop&q=80&w=600",
     badge: "Bespoke",
     desc: "Deep royal blue velvet color. This sapphire pendant is haloed by brilliant-cut diamonds, suspended elegantly on an 18-karat white gold chain. Crafted to stand the test of time.",
-    specs: { metal: "18k White Gold", gemstone: "Oval Ceylon Sapphire", carats: "2.50 ct", clarity: "Eye-Clean" }
+    specs: { metal: "18k White Gold", gemstone: "Oval Ceylon Sapphire", carats: "2.50 ct", clarity: "Eye-Clean" },
+    images: [
+      "https://images.unsplash.com/photo-1599643478518-a784e5dc4c8f?auto=format&fit=crop&q=80&w=600",
+      "https://images.unsplash.com/photo-1611591437281-460bfbe1220a?auto=format&fit=crop&q=80&w=600"
+    ]
   },
   {
     id: "earrings-emerald",

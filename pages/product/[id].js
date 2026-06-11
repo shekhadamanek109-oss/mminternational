@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
 import { useShop } from '../../components/Layout';
-import { Heart, ShoppingBag, ArrowLeft, RefreshCw } from 'lucide-react';
+import { Heart, ShoppingBag, ArrowLeft, RefreshCw, Play } from 'lucide-react';
 import Link from 'next/link';
 
 export default function ProductDetail() {
@@ -15,6 +15,8 @@ export default function ProductDetail() {
   const [metalVariant, setMetalVariant] = useState('Platinum 950');
   const [sizeVariant, setSizeVariant] = useState('6');
   const [zoomStyle, setZoomStyle] = useState({ display: 'none' });
+  const [activeMedia, setActiveMedia] = useState(null);
+  const [mediaList, setMediaList] = useState([]);
 
   useEffect(() => {
     if (!id) return;
@@ -24,8 +26,21 @@ export default function ProductDetail() {
       .then(data => {
         const item = data.find(p => p.id === id);
         setProduct(item);
-        if (item && item.specs && item.specs.metal) {
-          setMetalVariant(item.specs.metal);
+        if (item) {
+          if (item.specs && item.specs.metal) {
+            setMetalVariant(item.specs.metal);
+          }
+          const allMedia = [];
+          if (item.images && item.images.length > 0) {
+            item.images.forEach(url => allMedia.push({ type: 'image', url }));
+          } else if (item.img) {
+            allMedia.push({ type: 'image', url: item.img });
+          }
+          if (item.videos && item.videos.length > 0) {
+            item.videos.forEach(url => allMedia.push({ type: 'video', url }));
+          }
+          setMediaList(allMedia);
+          setActiveMedia(allMedia[0] || null);
         }
         setLoading(false);
       })
@@ -53,12 +68,14 @@ export default function ProductDetail() {
 
   // Magnifying Glass Zoom Effect
   const handleMouseMove = (e) => {
+    if (activeMedia && activeMedia.type === 'video') return;
     const { left, top, width, height } = e.target.getBoundingClientRect();
     const x = ((e.pageX - left - window.scrollX) / width) * 100;
     const y = ((e.pageY - top - window.scrollY) / height) * 100;
+    const currentImgUrl = activeMedia ? activeMedia.url : product.img;
     setZoomStyle({
       display: 'block',
-      backgroundImage: `url(${product.img})`,
+      backgroundImage: `url(${currentImgUrl})`,
       backgroundPosition: `${x}% ${y}%`,
       left: `${e.nativeEvent.offsetX}px`,
       top: `${e.nativeEvent.offsetY}px`
@@ -84,26 +101,89 @@ export default function ProductDetail() {
       </Link>
 
       <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '60px', alignItems: 'flex-start' }}>
-        {/* Gallery with zoom */}
-        <div 
-          style={{ position: 'relative', overflow: 'hidden', cursor: 'zoom-in', border: '1px solid rgba(212,175,55,0.15)' }}
-          onMouseMove={handleMouseMove}
-          onMouseLeave={handleMouseLeave}
-        >
-          <img src={product.img} alt={product.title} style={{ width: '100%', height: 'auto', display: 'block' }} />
-          {/* Zoom lens */}
-          <div style={{
-            position: 'absolute',
-            width: '150px',
-            height: '150px',
-            border: '2px solid rgba(212, 175, 55, 0.4)',
-            borderRadius: '50%',
-            pointerEvents: 'none',
-            backgroundRepeat: 'no-repeat',
-            backgroundSize: '300%',
-            transform: 'translate(-50%, -50%)',
-            ...zoomStyle
-          }} />
+        {/* Gallery with zoom & thumbnails */}
+        <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
+          {activeMedia && activeMedia.type === 'video' ? (
+            <div style={{ position: 'relative', border: '1px solid rgba(212,175,55,0.15)', background: '#0a0a0a', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+              <video 
+                src={activeMedia.url} 
+                controls 
+                autoPlay 
+                muted 
+                playsInline
+                style={{ width: '100%', height: 'auto', display: 'block' }} 
+              />
+            </div>
+          ) : (
+            <div 
+              style={{ position: 'relative', overflow: 'hidden', cursor: 'zoom-in', border: '1px solid rgba(212,175,55,0.15)' }}
+              onMouseMove={handleMouseMove}
+              onMouseLeave={handleMouseLeave}
+            >
+              <img 
+                src={activeMedia ? activeMedia.url : product.img} 
+                alt={product.title} 
+                style={{ width: '100%', height: 'auto', display: 'block' }} 
+              />
+              {/* Zoom lens */}
+              <div style={{
+                position: 'absolute',
+                width: '150px',
+                height: '150px',
+                border: '2px solid rgba(212, 175, 55, 0.4)',
+                borderRadius: '50%',
+                pointerEvents: 'none',
+                backgroundRepeat: 'no-repeat',
+                backgroundSize: '300%',
+                transform: 'translate(-50%, -50%)',
+                ...zoomStyle
+              }} />
+            </div>
+          )}
+
+          {/* Thumbnails Row */}
+          {mediaList.length > 1 && (
+            <div style={{ display: 'flex', gap: '10px', overflowX: 'auto', paddingBottom: '10px' }}>
+              {mediaList.map((media, idx) => (
+                <div
+                  key={idx}
+                  onClick={() => {
+                    setActiveMedia(media);
+                    setZoomStyle({ display: 'none' });
+                  }}
+                  style={{
+                    position: 'relative',
+                    width: '80px',
+                    height: '80px',
+                    border: activeMedia && activeMedia.url === media.url ? '2px solid #d4af37' : '1px solid rgba(255,255,255,0.1)',
+                    cursor: 'pointer',
+                    background: '#0a0a0a',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    overflow: 'hidden',
+                    flexShrink: 0
+                  }}
+                >
+                  {media.type === 'video' ? (
+                    <>
+                      <video 
+                        src={media.url} 
+                        style={{ width: '100%', height: '100%', objectFit: 'cover' }} 
+                        muted 
+                        playsInline
+                      />
+                      <div style={{ position: 'absolute', background: 'rgba(0,0,0,0.6)', borderRadius: '50%', padding: '6px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                        <Play size={16} color="#d4af37" fill="#d4af37" />
+                      </div>
+                    </>
+                  ) : (
+                    <img src={media.url} alt="" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                  )}
+                </div>
+              ))}
+            </div>
+          )}
         </div>
 
         {/* Specifications and variants */}

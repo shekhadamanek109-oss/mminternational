@@ -5,7 +5,7 @@ const nextConfig = {
     domains: ['images.unsplash.com'],
     unoptimized: true,
   },
-  output: 'export',
+  ...(process.env.NODE_ENV === 'production' ? { output: 'export' } : {}),
 }
 
 module.exports = nextConfig
