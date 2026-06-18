@@ -47,7 +47,7 @@ export default function Footer() {
               </span>
             </Link>
             <p style={{ lineHeight: '1.8', fontSize: '13px' }}>
-              Redefining luxury since 1998 with hand-selected gemstones, immaculate shapes, and premium platinum and gold bands.
+              Redefining luxury with hand-selected gemstones, immaculate shapes, and premium platinum and gold bands.
             </p>
           </div>
 

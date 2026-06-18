@@ -75,7 +75,7 @@ export default function Home() {
         <div style={{ maxWidth: '1300px', margin: '0 auto', padding: '0 40px', width: '100%', position: 'relative', zIndex: 2 }}>
           <div style={{ maxWidth: '700px' }}>
             <p style={{ fontSize: '11px', fontWeight: '500', letterSpacing: '0.4em', textTransform: 'uppercase', color: '#d4af37', marginBottom: '20px' }}>
-              Bespoke Excellence Since 1998
+              Bespoke Excellence
             </p>
             <h1 style={{ fontSize: '64px', fontWeight: '200', lineHeight: '1.15', marginBottom: '25px' }}>
               Timeless Elegance, <br /><span className="text-gold">Crafted to Perfection</span>
