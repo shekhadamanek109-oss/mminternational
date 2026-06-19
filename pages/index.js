@@ -50,8 +50,18 @@ export default function Home() {
   return (
     <div>
       <Head>
-        <title>MM Fine Jewelry | Luxury & Bespoke Atelier</title>
-        <meta name="description" content="Discover exquisite hand-crafted diamond rings, luxury necklaces, and custom bridal jewelry at MM Fine Jewelry. Book a private viewing today." />
+        <title>MM International | Luxury Fine Jewelry</title>
+        <meta name="description" content="Discover exquisite hand-crafted diamond rings, luxury necklaces, and custom bridal jewelry at MM International. Book a private viewing today." />
+        <link rel="icon" href="/logo.png" />
+        <link rel="apple-touch-icon" href="/logo.png" />
+        <link rel="shortcut icon" href="/logo.png" />
+        <meta property="og:title" content="MM International | Luxury Fine Jewelry" />
+        <meta property="og:description" content="Discover exquisite hand-crafted diamond rings, luxury necklaces, and custom bridal jewelry at MM International." />
+        <meta property="og:image" content="/logo.png" />
+        <meta property="og:type" content="website" />
+        <meta property="og:url" content="https://mminternational.com" />
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:image" content="/logo.png" />
       </Head>
 
       {/* Hero Section */}

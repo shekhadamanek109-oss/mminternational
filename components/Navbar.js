@@ -31,28 +31,17 @@ export default function Navbar() {
         justifyContent: 'space-between',
         alignItems: 'center'
       }}>
-        <Link href="/" style={{
-          textDecoration: 'none',
-          display: 'flex',
-          flexDirection: 'column',
-          alignItems: 'center',
-          fontFamily: 'Cormorant Garamond, serif',
-          fontSize: '24px',
-          letterSpacing: '0.15em',
-          color: '#fdfbf7',
-          lineHeight: '1'
-        }}>
-          MM JEWELRY
-          <span style={{
-            fontSize: '9px',
-            fontFamily: 'Montserrat, sans-serif',
-            letterSpacing: '0.4em',
-            color: '#d4af37',
-            marginTop: '4px',
-            textTransform: 'uppercase'
-          }}>
-            International
-          </span>
+        <Link href="/" style={{ textDecoration: 'none', display: 'flex', alignItems: 'center' }}>
+          <img
+            src="/logo.png"
+            alt="MM International"
+            style={{
+              height: '52px',
+              width: 'auto',
+              objectFit: 'contain',
+              filter: 'drop-shadow(0 0 8px rgba(212,175,55,0.3))'
+            }}
+          />
         </Link>
 
         <nav>
